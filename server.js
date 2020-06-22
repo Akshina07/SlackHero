@@ -11,9 +11,10 @@ const { createEventAdapter } = require('@slack/events-api');
 const slackEvents = createEventAdapter(slackSigningSecret);
 const http = require('http');
 const socketio = require('socket.io');
+const path = require('path');
 require('babel-polyfill');
 const fs = require('fs');
-
+// const path = require('path');
 
 let lastClientId;
 let lastTS;
@@ -23,6 +24,11 @@ const oauth = require('./routes/api/oauth');
 const slackbot= require("./routes/api/slashbot");
 const User = require('./models/User');
 const GlobalMessage = require('./models/GlobalMessage');
+
+app.use(express.static('client/build'));
+app.get('*', (req, res) => {
+res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
 // const sapp = require('./utilities/slack');
 // const router = require('./router');
 
@@ -40,6 +46,7 @@ const server= http.Server(app);
 const port = 5000;
 
 // // Slack Events MiddleWare
+app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/slack/events', slackEvents.expressMiddleware());
 app.use(cors());
 
