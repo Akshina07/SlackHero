@@ -20,6 +20,8 @@ let botFlag=false;
 
 let jwtUser = null;
 let conversationsStore = {};
+
+//Modules to get list of Slack Channels
 async function fetchConversations(req) {
     try {
       // Call the conversations.list method using the built-in WebClient
@@ -82,7 +84,7 @@ router.use(function(req, res, next) {
 
 // Get global messages
 router.get('/global', (req, res) => {
-    // console.log(req);
+    console.log(req);
     console.log("Get a message");
     GlobalMessage.aggregate([
         {
@@ -361,6 +363,7 @@ router.post('/', (req, res) => {
     );
 });
 
+//Get bot conversations 
 router.get('/bot', (req, res) => {
     console.log("Get a message");
     GlobalMessage.aggregate([
@@ -392,7 +395,7 @@ router.get('/bot', (req, res) => {
 });
 
 
-
+// Post a bot response
 router.post('/bot', (req,res) => {
      
     // console.log(req.body.body);
@@ -467,7 +470,7 @@ router.post('/bot', (req,res) => {
 
 })
 
-
+// Create a new room on Slack
 router.post('/createRoom', (req,res) => {
     // fetchConversations(req);
     console.log(req.body.body);

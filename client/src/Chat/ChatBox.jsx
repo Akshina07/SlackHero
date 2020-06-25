@@ -167,12 +167,22 @@ const ChatBox = props => {
             console.log("Inside reload messages");
             getGlobalMessages().then(res => {
                 console.log(res);
-                setMessages(res);
+                if(res!==undefined){
+                    setMessages(res);
+                }
+                else
+                    setMessages([]);
+                
             });
         } else if (props.scope !== null && props.conversationId !== null) {
             console.log("Inside reload messages 2");
-            getConversationMessages(props.user._id).then(res =>
-                setMessages(res)
+            getConversationMessages(props.user._id).then(res =>{
+                if(res!==undefined){
+                    setMessages(res);
+                }
+                else    
+                    setMessages([]);
+                }
             );
         } else {
             console.log("Inside reload messages 3");
@@ -233,7 +243,7 @@ const ChatBox = props => {
                 <Grid item xs={12}>
                     <Grid container className={classes.messageContainer}>
                         <Grid item xs={12} className={classes.messagesRow}>
-                            {messages && (
+                            {Array.isArray(messages) && messages && (
                                 <List>
                                     {messages.map(m => (
                                         <ListItem

@@ -15,7 +15,7 @@ const validateLoginInput = require('../../validation/login');
 const User = require('../../models/User');
 
 
-
+// Sign in Slack and Add to Slack Button Route 
 router.get('/oauth/v2/authorize', function(req, res){
     if (!req.query.code) { // access denied
       console.log('Access denied');
@@ -182,15 +182,10 @@ router.get('/oauth/v2/authorize', function(req, res){
         //        user: response.authed_user.id
 
         //    });
-        //    console.log(user_);
-        res.redirect("http://localhost:3000/chat");
+        //    console.log(user_); 
+        res.redirect("http://localhost:3000/chat"); // will be redirected to client side !
 
         }
-        
-        
-  
-        // Show a nicer web page or redirect to Slack, instead of just giving 200 in reality!
-        //res.redirect(__dirname + "/public/success.html");
       }
     })
   });

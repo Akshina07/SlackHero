@@ -64,7 +64,7 @@ router.post('/slack/command/ETO',(req, res) =>{
                   "type": "image",
                   "title": {
                     "type": "plain_text",
-                    "text": "GS Stock Price"
+                    "text": "GS Stock Price: https://finance.yahoo.com/quote/GS/"
                   },
                   "block_id": "image4",
                   "image_url": "https://gsimageakshina.s3.amazonaws.com/GS_YahooFinanceChart.png",

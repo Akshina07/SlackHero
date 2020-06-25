@@ -14,7 +14,6 @@ const socketio = require('socket.io');
 const path = require('path');
 require('babel-polyfill');
 const fs = require('fs');
-// const path = require('path');
 
 let lastClientId;
 let lastTS;
@@ -25,10 +24,10 @@ const slackbot= require("./routes/api/slashbot");
 const User = require('./models/User');
 const GlobalMessage = require('./models/GlobalMessage');
 
-app.use(express.static('client/build'));
-app.get('*', (req, res) => {
-res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-});
+// app.use(express.static('client/build'));
+// app.get('*', (req, res) => {
+// res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+// });
 // const sapp = require('./utilities/slack');
 // const router = require('./router');
 
@@ -46,7 +45,7 @@ const server= http.Server(app);
 const port = 5000;
 
 // // Slack Events MiddleWare
-app.use(express.static(path.join(__dirname, 'client/build')));
+// app.use(express.static(path.join(__dirname, 'client/build')));
 app.use('/slack/events', slackEvents.expressMiddleware());
 app.use(cors());
 
@@ -88,6 +87,7 @@ app.use('/api/messages', messages);
 app.use(slackbot);
 
 
+//Listening to events from SLack 
 io.on("connection",function(socket){
     // console.log(socket);
     const botUser = new User({
@@ -157,7 +157,7 @@ io.on("connection",function(socket){
                     lastTS=event.ts;
                 }
                 
-            }
+            } // Incase of a normal message 
             else if(event.subtype==undefined){
                 // socket.emit('fromslack', "SLACK:"+JSON.stringify(event.blocks));
                 // botFlag=true;
@@ -194,17 +194,8 @@ io.on("connection",function(socket){
 
 
 
-// (async() =>{ 
-//     await slackEvents.on('message', (event) => {
-//     console.log('can listen');
-//     console.log(`Received a message event: user ${event.user} in channel ${event.channel} says ${event.text}`);
-    
-//   });
-// })();
 
-
-
-
+//Start listening at the server port 
 
 (async()=>{
   await server.listen(port, () => console.log(`Server has started.`));
